@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Bright Red
+  - Dark Red
+  - Dark Yellow
+  - Green
+  - Orange
+  - Pale Pink
+  - Purple
+  - Yellow
   layers:
   - Default
   - TransparentFX
