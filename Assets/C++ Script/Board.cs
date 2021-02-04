@@ -15,13 +15,16 @@ public class Board : MonoBehaviour
     public int height;
     public int offSet;
     public GameObject[] dots;
-    public GameObject tilePrefab;
-    private BackgroundTile[,] allTiles;
+    public GameObject tilePrefab; 
     public GameObject[,] allDots;
+
+    private BackgroundTile[,] allTiles;
+    private FindMatches findMatches;
 
     // Start is called before the first frame update
     void Start()
     {
+        findMatches = FindObjectOfType<FindMatches>();
         allTiles = new BackgroundTile[width, height];
         allDots = new GameObject[width, height];
         SetUp();
@@ -96,6 +99,7 @@ public class Board : MonoBehaviour
     {
         if (allDots[column, row].GetComponent<Dot>().isMatched)
         {
+            findMatches.currentMatches.Remove(allDots[column, row]);
             Destroy(allDots[column, row]);
             allDots[column, row] = null;
         }
