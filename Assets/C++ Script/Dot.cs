@@ -87,6 +87,8 @@ public class Dot : MonoBehaviour
                 otherDot.GetComponent<Dot>().column = column;
                 row = previousRow;
                 column = previousColumn;
+                yield return new WaitForSeconds(.5f);
+                board.currentState = GameState.move;
             }
             else
             {
@@ -98,13 +100,18 @@ public class Dot : MonoBehaviour
 
     private void OnMouseDown()//We check and calculate the mouse/touch position when we click(or touch the screen )
     {
-        firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
+        if (board.currentState == GameState.move)
+        {
+            firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
     }
     private void OnMouseUp()//We check and calculate the mouse/touch position when we release the click(or lift the finger from the screen )
     {
-        finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        CalculateAngle();
+        if (board.currentState == GameState.move)
+        {
+            finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            CalculateAngle();
+        }
     }
 
     void CalculateAngle() //We calculate the angle of our swipe in the form of degrees
@@ -113,6 +120,11 @@ public class Dot : MonoBehaviour
         {
             swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
             MovePieces();
+            board.currentState = GameState.wait;
+        }
+        else
+        {
+            board.currentState = GameState.move;
         }
 
     }
